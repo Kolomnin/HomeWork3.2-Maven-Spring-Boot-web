@@ -1,5 +1,9 @@
 package com.homework.employee.model;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 public class Employee {
     private static int counter;
     private final int id;
@@ -8,10 +12,21 @@ public class Employee {
     private final int department;
     private final int salary;
 
-
     public Employee(String firstName, String lastName, int department, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+
+        if (StringUtils.isBlank(firstName) && StringUtils.isAlpha(firstName)) {
+            this.firstName = StringUtils.capitalize(firstName);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST); /** Удобен для обработки базовых ошибок
+                                                                       для REST API. Правильно ли я выбрал исключение?*/
+        }
+
+        if (StringUtils.isBlank(lastName) && StringUtils.isAlpha(lastName)) {
+            this.lastName = StringUtils.capitalize(lastName);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
         this.department = department;
         this.salary = salary;
         this.id = counter++;

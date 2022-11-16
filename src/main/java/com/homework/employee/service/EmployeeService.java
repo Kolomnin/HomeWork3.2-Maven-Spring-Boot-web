@@ -41,7 +41,7 @@ public class EmployeeService {
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .min()
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new RuntimeException("Something went wrong"));
     }
 
     public int getSalaryMax() {
@@ -50,9 +50,7 @@ public class EmployeeService {
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .max()
-                .orElseThrow(RuntimeException::new);
-
-        /**Или правильнее делать через метод reference ? (но так вроде компактрее)*/
+                .orElseThrow(() -> new RuntimeException("Something went wrong"));
     }
 
     public int getSalaryAverage() {
@@ -62,9 +60,6 @@ public class EmployeeService {
                 .mapToInt(Employee::getSalary)
                 .average()
                 .orElseThrow(() -> new RuntimeException("Something went wrong"));
-
-        /**Павел как лучше делать через лямбду с конкретрым описанием "Something went wrong" ? */
-
     }
 
     public List<Employee> getSalaryHighAverage() {
