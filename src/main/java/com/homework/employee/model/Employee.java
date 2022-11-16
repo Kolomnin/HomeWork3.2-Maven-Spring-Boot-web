@@ -14,14 +14,14 @@ public class Employee {
 
     public Employee(String firstName, String lastName, int department, int salary) {
 
-        if (StringUtils.isBlank(firstName) && StringUtils.isAlpha(firstName)) {
+        if (!StringUtils.isBlank(firstName) && StringUtils.isAlpha(firstName)) {
             this.firstName = StringUtils.capitalize(firstName);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST); /** Удобен для обработки базовых ошибок
                                                                        для REST API. Правильно ли я выбрал исключение?*/
         }
 
-        if (StringUtils.isBlank(lastName) && StringUtils.isAlpha(lastName)) {
+        if (!StringUtils.isBlank(lastName) && StringUtils.isAlpha(lastName)) {
             this.lastName = StringUtils.capitalize(lastName);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
