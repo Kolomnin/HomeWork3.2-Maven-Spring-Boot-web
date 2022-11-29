@@ -1,5 +1,6 @@
 package com.homework.employee.service;
 
+import com.homework.employee.exception.EmployeeEmptyValueException;
 import com.homework.employee.model.Employee;
 import com.homework.employee.controller.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
@@ -69,4 +70,16 @@ public class EmployeeService {
                 .filter(employee -> getSalaryAverage() < employee.getSalary())
                 .collect(Collectors.toList());
     }
+    public List<Employee> getAllEmployeesWithAverageSalary(){
+        var averageSalary = employees
+                .values()
+                .stream()
+                .mapToDouble(Employee::getSalary)
+                .average().orElseThrow(EmployeeEmptyValueException::new);
+        return employees
+                .values()
+                .stream()
+                .filter(employee -> averageSalary < employee.getSalary()).collect(Collectors.toList());
+    }
+
 }
